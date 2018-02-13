@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Grassroots Infrastructure</title>
+
+
+    <!-- site -->
+    <script type="text/javascript" src="scripts/script.js"></script>
+    <!--<link rel="stylesheet" href="styles/style.css" type="text/css"/>-->
+
+    <!-- font awesome -->
+    <link href="scripts/fontawesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="scripts/jquery/js/jquery-1.11.3.min.js"></script>
+    <!--<script type="text/javascript" src="scripts/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>-->
+    <!--<script type="text/javascript" src="scripts/jquery/js/jquery.highlight.js"></script>-->
+    <!--<link rel="stylesheet" href="scripts/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.css"-->
+          <!--type="text/css"/>-->
+    <!--<link rel="stylesheet" href="scripts/jquery/colorbox/colorbox.css"-->
+          <!--type="text/css"/>-->
+
+    <!-- datatables -->
+    <!--<script type="text/javascript" src="scripts/jquery/datatables/js/jquery.dataTables.min.js"></script>-->
+    <!--<script type="text/javascript" src="scripts/jquery/datatables/js/dataTables.searchHighlight.min.js"></script>-->
+    <!--<link rel="stylesheet" href="scripts/jquery/datatables/css/jquery.dataTables.min.css"-->
+    <!--type="text/css"/>-->
+
+
+    <!-- bootstrap -->
+    <script src="scripts/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <!--<script src="scripts/bootstrap/js/validator.js" type="text/javascript"></script>-->
+    <link href="scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="container"
+     style="width: 1170px ! important; margin-right: auto ! important; margin-left: auto ! important;">
+    <h2>Grassroots
+        Infrastructure</h2>
+    <form>
+        <div class="form-group">
+            <label for="server_url">Server URL</label>
+            <input type="text" class="form-control" name="server_url" id="server_url" value="https://grassroots.tools/data/api/metadata/add"/>
+        </div>
+        <div class="form-group">
+            <label for="object">Object / Collection</label>
+            <input type="text" class="form-control" name="server_url" id="server_url" value=""/>
+        </div>
+        <div class="form-group">
+            <label for="json_values">JSON Values to add</label>
+            <textarea class="form-control" name="json_values" id="json_values" rows="10"></textarea>
+        </div>
+        <input id="submit_button" class="btn btn-default" type="button" onclick="submit_form();" value="Submit">
+    </form>
+
+    <div id="results"></div>
+
+</div>
+
+
+</body>
+</html>
