@@ -22,9 +22,9 @@
     <!--<script type="text/javascript" src="scripts/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>-->
     <!--<script type="text/javascript" src="scripts/jquery/js/jquery.highlight.js"></script>-->
     <!--<link rel="stylesheet" href="scripts/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.css"-->
-          <!--type="text/css"/>-->
+    <!--type="text/css"/>-->
     <!--<link rel="stylesheet" href="scripts/jquery/colorbox/colorbox.css"-->
-          <!--type="text/css"/>-->
+    <!--type="text/css"/>-->
 
     <!-- datatables -->
     <!--<script type="text/javascript" src="scripts/jquery/datatables/js/jquery.dataTables.min.js"></script>-->
@@ -39,26 +39,34 @@
     <link href="scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
 
-
 </head>
 <body>
 
 <div class="container"
      style="width: 1170px ! important; margin-right: auto ! important; margin-left: auto ! important;">
     <h2>Grassroots
-        Infrastructure</h2>
+        Infrastructure - iRODS Metadata</h2>
     <form>
         <div class="form-group">
             <label for="server_url">Server URL</label>
-            <input type="text" class="form-control" name="server_url" id="server_url" value="https://grassroots.tools/data/api/metadata/add"/>
+            <input type="text" class="form-control" name="server_url" id="server_url" value="/data/api/metadata/add"/>
         </div>
         <div class="form-group">
             <label for="object">Object / Collection</label>
-            <input type="text" class="form-control" name="server_url" id="server_url" value=""/>
+            <input type="text" class="form-control" name="object" id="object" value="/empty.gz"/>
+        </div>
+        <div class="form-group" id="key-input">
+            <label for="key">Key</label>
+            <input type="text" class="form-control" name="key" id="key" value=""/>
+        </div>
+        <div class="form-group" id="value-input">
+            <label for="value">Value</label>
+            <input type="text" class="form-control" name="value" id="value" value=""/>
         </div>
         <div class="form-group">
-            <label for="json_values">JSON Values to add</label>
-            <textarea class="form-control" name="json_values" id="json_values" rows="10"></textarea>
+            <label for="json_values">JSON Values to add (Key:value pairs in jsonObject e.g. {"key1":"value1","key2":"value2"})</label>
+            <textarea class="form-control" name="json_values" id="json_values" onkeyup="textarea_keyup();"
+                      rows="10"></textarea>
         </div>
         <input id="submit_button" class="btn btn-default" type="button" onclick="submit_form();" value="Submit">
     </form>
@@ -66,7 +74,40 @@
     <div id="results"></div>
 
 </div>
-
-
 </body>
+<script type="text/javascript">
+    function submit_form() {
+        if ('' == $('#json_values').val()) {
+            send_request($('#server_url').val(), $('#object').val(), $('#key').val(), $('#value').val());
+        } else {
+            var jsonArray = $.parseJSON($('#json_values').val());
+            for(key in jsonArray) {
+                var value = jsonArray[key];
+                console.log(key, value);
+                send_request($('#server_url').val(), $('#object').val(), key, value);
+            }
+        }
+        console.log("yep");
+    }
+
+    function textarea_keyup() {
+        $('#key-input').hide();
+        $('#value-input').hide();
+    }
+
+    function send_request(url, object, key, value){
+        $.ajax({
+            url: url,
+            'type': 'GET',
+            'data': {
+                'path': object,
+                'key': key,
+                'value': value
+            },
+            'success': function (data) {
+                $('#results').append(JSON.stringify(data) + '<br/>');
+            }
+        });
+    }
+</script>
 </html>
