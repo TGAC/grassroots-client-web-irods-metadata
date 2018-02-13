@@ -68,7 +68,12 @@
             <textarea class="form-control" name="json_values" id="json_values" onkeyup="textarea_keyup();"
                       rows="10"></textarea>
         </div>
-        <input id="submit_button" class="btn btn-default" type="button" onclick="submit_form();" value="Submit">
+
+        <div class="form-group">
+        <input id="submit_button" class="btn btn-default" type="button" onclick="submit_form();" value="Submit"/>
+
+        <input id="submit_button2" class="btn btn-default" type="button" onclick="submit_burkhard();" value="Burkhard_only"/>
+        </div>
     </form>
 
     <div id="results"></div>
@@ -108,6 +113,16 @@
                 $('#results').append(JSON.stringify(data) + '<br/>');
             }
         });
+    }
+
+
+    function submit_burkhard() {
+        alert('not ready yet!');
+        if (confirm('Are you sure you want to submit to Burkards data?')) {
+            // Save it!
+        } else {
+            // Do nothing!
+        }
     }
 </script>
 </html>
