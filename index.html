@@ -53,7 +53,7 @@
         </div>
         <div class="form-group">
             <label for="object">Object / Collection</label>
-            <input type="text" class="form-control" name="object" id="object" value="/empty.gz"/>
+            <input type="text" class="form-control" name="object" id="object" value="/temp/empty.gz"/>
         </div>
         <div class="form-group" id="key-input">
             <label for="key">Key</label>
@@ -64,15 +64,17 @@
             <input type="text" class="form-control" name="value" id="value" value=""/>
         </div>
         <div class="form-group">
-            <label for="json_values">JSON Values to add (Key:value pairs in jsonObject e.g. {"key1":"value1","key2":"value2"})</label>
+            <label for="json_values">JSON Values to add (Key:value pairs in jsonObject e.g.
+                {"key1":"value1","key2":"value2"})</label>
             <textarea class="form-control" name="json_values" id="json_values" onkeyup="textarea_keyup();"
                       rows="10"></textarea>
         </div>
 
         <div class="form-group">
-        <input id="submit_button" class="btn btn-default" type="button" onclick="submit_form();" value="Submit"/>
+            <input id="submit_button" class="btn btn-default" type="button" onclick="submit_form();" value="Submit"/>
 
-        <input id="submit_button2" class="btn btn-default" type="button" onclick="submit_burkhard();" value="Burkhard_only"/>
+            <input id="submit_button2" class="btn btn-default" type="button" onclick="submit_burkhard();"
+                   value="Burkhard_only"/>
         </div>
     </form>
 
@@ -85,14 +87,9 @@
         if ('' == $('#json_values').val()) {
             send_request($('#server_url').val(), $('#object').val(), $('#key').val(), $('#value').val());
         } else {
-            var jsonArray = $.parseJSON($('#json_values').val());
-            for(key in jsonArray) {
-                var value = jsonArray[key];
-                console.log(key, value);
-                send_request($('#server_url').val(), $('#object').val(), key, value);
-            }
+            var jsonObj = $.parseJSON($('#json_values').val());
+            send_whole_jsonObj($('#server_url').val(), $('#object').val(), jsonObj);
         }
-        console.log("yep");
     }
 
     function textarea_keyup() {
@@ -100,28 +97,54 @@
         $('#value-input').hide();
     }
 
-    function send_request(url, object, key, value){
-        $.ajax({
-            url: url,
-            'type': 'GET',
-            'data': {
-                'path': object,
-                'key': key,
-                'value': value
-            },
-            'success': function (data) {
-                $('#results').append(JSON.stringify(data) + '<br/>');
-            }
-        });
+    function send_request(url, object, key, value) {
+        if ('' == value) {
+            $('#results').append(key + ' value empty, skipped');
+        } else {
+            $.ajax({
+                url: url,
+                'type': 'GET',
+                'data': {
+                    'path': object,
+                    'key': key,
+                    'value': value
+                },
+                'success': function (data) {
+                    $('#results').append(JSON.stringify(data) + '<br/>');
+                }
+            });
+        }
+    }
+
+    function send_whole_jsonObj(url, object, jsonObj){
+        for (key in jsonObj) {
+            var value = jsonObj[key];
+            console.log(key, value);
+            $('#results').append('Test run: object: ' + object + ' json: ' + JSON.stringify(jsonObj) + '<br/>');
+            // send_request(url, object, key, value);
+        }
     }
 
 
     function submit_burkhard() {
-        alert('not ready yet!');
+        var url = $('#server_url').val();
+        var obj_prefix="/under_license/toronto/Wulff_2018-01-31_OWWC/";
+        var collection_list = [];
+        var jsonArray = $.parseJSON($('#json_values').val());
+
         if (confirm('Are you sure you want to submit to Burkards data?')) {
             // Save it!
+            for (var i = 0; i < jsonArray.length; i++) {
+                if(jsonArray[i]['File']!=undefined){
+                    var object = obj_prefix + jsonArray[i]['File'];
+                    send_whole_jsonObj(url,object,jsonArray[i]);
+
+                }
+
+            }
+
         } else {
-            // Do nothing!
+            alert('nothing has done!');
         }
     }
 </script>
