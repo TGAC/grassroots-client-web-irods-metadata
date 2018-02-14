@@ -110,6 +110,7 @@
                     'value': value
                 },
                 'success': function (data) {
+                    $('#results').append('Added ' + key + ':' + value + '<br/>');
                     $('#results').append(JSON.stringify(data) + '<br/>');
                 }
             });
@@ -117,10 +118,12 @@
     }
 
     function send_whole_jsonObj(url, object, jsonObj) {
+        $('#results').append('Test run: object: ' + object + ' json: ' + JSON.stringify(jsonObj) + '<br/>');
+
+        // $('#results').append('For object: ' + object + ' json: ' + JSON.stringify(jsonObj) + '<br/>');
         for (key in jsonObj) {
             var value = jsonObj[key];
             console.log(key, value);
-            $('#results').append('Test run: object: ' + object + ' json: ' + JSON.stringify(jsonObj) + '<br/>');
             // send_request(url, object, key, value);
         }
     }
@@ -144,7 +147,7 @@
                     //process collecion
                     if ($.inArray(accession, collection_list) < 0) {
                         collection_list.push(accession);
-                        delete jsonArray[i]['Accession'];
+                        // delete jsonArray[i]['Accession'];
                         object = obj_prefix + accession;
                         send_whole_jsonObj(url, object, jsonArray[i]);
 
