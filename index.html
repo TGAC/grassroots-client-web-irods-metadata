@@ -116,7 +116,7 @@
         }
     }
 
-    function send_whole_jsonObj(url, object, jsonObj){
+    function send_whole_jsonObj(url, object, jsonObj) {
         for (key in jsonObj) {
             var value = jsonObj[key];
             console.log(key, value);
@@ -128,16 +128,28 @@
 
     function submit_burkhard() {
         var url = $('#server_url').val();
-        var obj_prefix="/under_license/toronto/Wulff_2018-01-31_OWWC/";
+        var obj_prefix = "/under_license/toronto/Wulff_2018-01-31_OWWC/";
         var collection_list = [];
         var jsonArray = $.parseJSON($('#json_values').val());
 
         if (confirm('Are you sure you want to submit to Burkards data?')) {
             // Save it!
             for (var i = 0; i < jsonArray.length; i++) {
-                if(jsonArray[i]['File']!=undefined){
+                if (jsonArray[i]['File'] != undefined) {
                     var object = obj_prefix + jsonArray[i]['File'];
-                    send_whole_jsonObj(url,object,jsonArray[i]);
+                    var accession = jsonArray[i]['Accession'];
+                    delete jsonArray[i]['File'];
+                    send_whole_jsonObj(url, object, jsonArray[i]);
+
+                    //process collecion
+                    if ($.inArray(accession, collection_list) < 0) {
+                        collection_list.push(accession);
+                        delete jsonArray[i]['Accession'];
+                        object = obj_prefix + accession;
+                        send_whole_jsonObj(url, object, jsonArray[i]);
+
+                    }
+
 
                 }
 
