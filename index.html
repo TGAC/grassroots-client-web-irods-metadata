@@ -103,6 +103,7 @@
         if ('' == value) {
             $('#results').append(key + ' value empty, skipped' + '<br/>');
         } else {
+            $('#results').append('Adding ' + key + ':' + value + '<br/>');
             $.ajax({
                 url: url,
                 'type': 'GET',
@@ -112,7 +113,6 @@
                     'value': value
                 },
                 'success': function (data) {
-                    $('#results').append('Added ' + key + ':' + value + '<br/>');
                     $('#results').append(JSON.stringify(data) + '<br/>');
                 }
             });
