@@ -84,11 +84,13 @@
 </body>
 <script type="text/javascript">
     function submit_form() {
-        if ('' == $('#json_values').val()) {
-            send_request($('#server_url').val(), $('#object').val(), $('#key').val(), $('#value').val());
-        } else {
-            var jsonObj = $.parseJSON($('#json_values').val());
-            send_whole_jsonObj($('#server_url').val(), $('#object').val(), jsonObj);
+        if (confirm('Are you sure you want to submit?')) {
+            if ('' == $('#json_values').val()) {
+                send_request($('#server_url').val(), $('#object').val(), $('#key').val(), $('#value').val());
+            } else {
+                var jsonObj = $.parseJSON($('#json_values').val());
+                send_whole_jsonObj($('#server_url').val(), $('#object').val(), jsonObj);
+            }
         }
     }
 
@@ -99,7 +101,7 @@
 
     function send_request(url, object, key, value) {
         if ('' == value) {
-            $('#results').append(key + ' value empty, skipped');
+            $('#results').append(key + ' value empty, skipped' + '<br/>');
         } else {
             $.ajax({
                 url: url,
@@ -118,13 +120,13 @@
     }
 
     function send_whole_jsonObj(url, object, jsonObj) {
-        $('#results').append('Test run: object: ' + object + ' json: ' + JSON.stringify(jsonObj) + '<br/>');
+        // $('#results').append('Test run: object: ' + object + ' json: ' + JSON.stringify(jsonObj) + '<br/>');
 
-        // $('#results').append('For object: ' + object + ' json: ' + JSON.stringify(jsonObj) + '<br/>');
+        $('#results').append('For object: ' + object + ' json: ' + JSON.stringify(jsonObj) + '<br/>');
         for (key in jsonObj) {
             var value = jsonObj[key];
             console.log(key, value);
-            // send_request(url, object, key, value);
+            send_request(url, object, key, value);
         }
     }
 
