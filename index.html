@@ -75,7 +75,7 @@
 
             <input id="submit_button2" class="btn btn-default" type="button" onclick="submit_burkhard();"
                    value="Burkhard_only"/>
-            <input id="submit_button2" class="btn btn-default" type="button" onclick="edit_burkhard();"
+            <input id="submit_button3" class="btn btn-default" type="button" onclick="edit_burkhard();"
                    value="edit_Burkhard_only"/>
         </div>
     </form>
@@ -134,7 +134,7 @@
 
 
     function submit_burkhard() {
-        var url = '/data/api/metadata/edit';
+        var url = $('#server_url').val();
         var obj_prefix = "under_license/toronto/Wulff_2018-01-31_OWWC/";
         var collection_list = [];
         var jsonArray = $.parseJSON($('#json_values').val());
@@ -169,7 +169,7 @@
 
 
     function edit_burkhard() {
-        var url = $('#server_url').val();
+        var url = '/data/api/metadata/edit';
         var obj_prefix = "under_license/toronto/Wulff_2018-01-31_OWWC/";
         var collection_list = [];
         var jsonArray = $.parseJSON($('#json_values').val());
