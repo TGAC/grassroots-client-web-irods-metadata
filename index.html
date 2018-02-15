@@ -75,6 +75,8 @@
 
             <input id="submit_button2" class="btn btn-default" type="button" onclick="submit_burkhard();"
                    value="Burkhard_only"/>
+            <input id="submit_button2" class="btn btn-default" type="button" onclick="edit_burkhard();"
+                   value="edit_Burkhard_only"/>
         </div>
     </form>
 
@@ -132,7 +134,7 @@
 
 
     function submit_burkhard() {
-        var url = $('#server_url').val();
+        var url = '/data/api/metadata/edit';
         var obj_prefix = "under_license/toronto/Wulff_2018-01-31_OWWC/";
         var collection_list = [];
         var jsonArray = $.parseJSON($('#json_values').val());
@@ -162,6 +164,62 @@
 
         } else {
             alert('nothing has done!');
+        }
+    }
+
+
+    function edit_burkhard() {
+        var url = $('#server_url').val();
+        var obj_prefix = "under_license/toronto/Wulff_2018-01-31_OWWC/";
+        var collection_list = [];
+        var jsonArray = $.parseJSON($('#json_values').val());
+
+        if (confirm('Are you sure you want to submit to Burkards data?')) {
+            // Save it!
+            for (var i = 0; i < jsonArray.length; i++) {
+                if (jsonArray[i]['File'] != undefined) {
+                    var object = obj_prefix + jsonArray[i]['File'];
+                    var accession = jsonArray[i]['Accession'];
+                    edit_request(url, object, 'Whole Genome Sequencing', 'WGS', 'Laboratory techniques', 'Whole Genome Sequencing');
+
+                    //process collecion
+                    if ($.inArray(accession, collection_list) < 0) {
+                        collection_list.push(accession);
+                        // delete jsonArray[i]['Accession'];
+                        object = obj_prefix + accession;
+                        edit_request(url, object, 'Whole Genome Sequencing', 'WGS', 'Laboratory techniques', 'Whole Genome Sequencing');
+
+                    }
+
+
+                }
+
+            }
+
+        } else {
+            alert('nothing has done!');
+        }
+    }
+
+    function edit_request(url, object, key, value, new_key, new_value) {
+        if ('' == value) {
+            $('#results').append(key + ' value empty, skipped' + '<br/>');
+        } else {
+            $.ajax({
+                url: url,
+                'type': 'GET',
+                'data': {
+                    'path': object,
+                    'key': key,
+                    'value': value,
+                    'new_key': new_key,
+                    'new_value': new_value
+                },
+                'success': function (data) {
+                    $('#results').append('Edited ' + key + ':' + value + ' with ' + new_key + ':' + new_value + '<br/>');
+                    $('#results').append(JSON.stringify(data) + '<br/>');
+                }
+            });
         }
     }
 </script>
