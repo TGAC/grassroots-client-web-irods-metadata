@@ -129,9 +129,7 @@
         for (key in jsonObj) {
             var value = jsonObj[key];
             console.log(key, value);
-            setTimeout(function () {
                 send_request(url, object, key, value);
-            }, 100);
         }
     }
 
@@ -157,16 +155,10 @@
                         // delete jsonArray[i]['Accession'];
                         object = obj_prefix + accession;
                         send_whole_jsonObj(url, object, jsonArray[i]);
-
                     }
-
-
                 }
-
             }
 
-        } else {
-            alert('nothing has done!');
         }
     }
 
