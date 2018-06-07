@@ -50,7 +50,7 @@
         <div class="form-group">
             <label for="server_url">Server URL</label>
             <input type="text" class="form-control" name="server_url" id="server_url"
-                   value="/test/data/api/metadata/add"/>
+                   value="/wheat/data/api/metadata/add"/>
         </div>
         <div class="form-group">
             <label for="object">Object / Collection</label>
@@ -74,8 +74,8 @@
         <div class="form-group">
             <input id="submit_button" class="btn btn-default" type="button" onclick="submit_form();" value="Submit"/>
 
-            <input id="submit_button2" class="btn btn-default" type="button" onclick="submit_burkhard();"
-                   value="Burkhard_only"/>
+            <input id="submit_button2" class="btn btn-default" type="button" onclick="submit_ricardo();"
+                   value="Ric"/>
             <!--<input id="submit_button3" class="btn btn-default" type="button" onclick="edit_burkhard();"-->
             <!--value="edit_Burkhard_only"/>-->
         </div>
@@ -156,6 +156,35 @@
                         object = obj_prefix + accession;
                         send_whole_jsonObj(url, object, jsonArray[i]);
                     }
+                }
+            }
+
+        }
+    }
+
+
+    function submit_ricardo() {
+        var url = $('#server_url').val();
+        var obj_prefix = "under_license/toronto/Ramirez-Gonzalez_etal_2018-06025-Transcriptome-Landscape/";
+        var collection_list = [];
+        var jsonArray = $.parseJSON($('#json_values').val());
+
+        if (confirm('Are you sure you want to submit to Ricardo data?')) {
+            // Save it!
+            for (var i = 0; i < jsonArray.length; i++) {
+                if (jsonArray[i]['File'] != undefined) {
+                    var object = obj_prefix + jsonArray[i]['File'];
+                    // var accession = jsonArray[i]['Accession'];
+                    delete jsonArray[i]['File'];
+                    send_whole_jsonObj(url, object, jsonArray[i]);
+
+                    //process collecion
+                    // if ($.inArray(accession, collection_list) < 0) {
+                    //     collection_list.push(accession);
+                    //     // delete jsonArray[i]['Accession'];
+                    //     object = obj_prefix + accession;
+                    //     send_whole_jsonObj(url, object, jsonArray[i]);
+                    // }
                 }
             }
 

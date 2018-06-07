@@ -19,6 +19,8 @@ skipValid = False
 verbose = True
 veryverbose = True
 
+# grassroots-3
+
 # 964c74e8-3aba-4b1c-ae2e-4d02e3ada7bd - wuff
 
 # 23d7d677-52fa-452e-ba7e-9d1a3a5f0c02 - laura
@@ -26,6 +28,19 @@ veryverbose = True
 # 37e03dce-30c8-4e98-b76c-7d0c53d4896d - bernardo
 
 # b0f20e9f-23f6-4cd3-bfd3-3910a1d472e8 - toronto index page
+
+# grassroots-4
+#
+# 9791ca43-ddf0-4bfe-8fc0-50ff69cd6229  - wuff
+#
+# ffc3e90f-7f89-4934-8e35-943bb64d1789  - laura
+#
+# b72884b3-5e52-4032-82d7-c0a3da40d171 - bernardo
+#
+# 5bb7cdc1-ddb0-4354-b74a-51a78f678341 - toronto index page
+
+# 3f00675f-836c-4364-9210-71794d8ff26e - ricardo
+
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -38,7 +53,10 @@ def is_json(myjson):
     return True
 
 
-projectUUID = "964c74e8-3aba-4b1c-ae2e-4d02e3ada7bd"
+wuffprojectUUID = "9791ca43-ddf0-4bfe-8fc0-50ff69cd6229"
+lauraprojectUUID = "ffc3e90f-7f89-4934-8e35-943bb64d1789"
+bernardoprojectUUID = "b72884b3-5e52-4032-82d7-c0a3da40d171"
+projectUUID = wuffprojectUUID
 
 sess = iRODSSession(host='localhost', port=1247, user='rods', password='rods', zone='grassrootsZone')
 coll = sess.collections.get("/grassrootsZone/public/under_license/toronto/Wulff_2018-01-31_OWWC")
