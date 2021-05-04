@@ -55,28 +55,25 @@ def is_json(myjson):
     return True
 
 
-wuffprojectUUID = "9791ca43-ddf0-4bfe-8fc0-50ff69cd6229"
-lauraproject2UUID = "9d2dd068-839e-41cb-a9f9-6266338f4212"
-bernardoprojectUUID = "b72884b3-5e52-4032-82d7-c0a3da40d171"
-projectUUID = lauraproject2UUID
+projectUUID = "5dd4fd26-56f7-4ae6-a046-70969f084ce8"
 
-sess = iRODSSession(host='localhost', port=1247, user='rods', password='rods', zone='grassrootsZone')
-coll = sess.collections.get("/grassrootsZone/public/under_license/toronto/Gardiner_2018-")
+sess = iRODSSession(host='localhost', port=1247, user='rods', password='', zone='grassrootsZone')
+coll = sess.collections.get("/grassrootsZone/public/under_license/toronto/Gardiner_2018-01-29_Watkins-diversity-12Mb")
 
-coll.metadata.add("project_uuid", projectUUID)
+#coll.metadata.add("project_uuid", projectUUID)
 
 for collection, subcollections, data_objects in coll.walk(topdown=True):
 
     if (len(data_objects) > 0):
         for dobj in data_objects:
 
-            dobj.metadata.add("project_uuid", projectUUID)
+            dobj.metadata.add("uuid", projectUUID)
             if (veryverbose): print(dobj.metadata.items())
 
 
     if (len(subcollections) > 0):
         for subc in subcollections:
 
-            subc.metadata.add("project_uuid", projectUUID)
+            subc.metadata.add("uuid", projectUUID)
             if (veryverbose): print(subc.metadata.items())
 
