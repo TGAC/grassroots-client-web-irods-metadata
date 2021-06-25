@@ -55,12 +55,12 @@ def is_json(myjson):
     return True
 
 
-projectUUID = "5dd4fd26-56f7-4ae6-a046-70969f084ce8"
+projectUUID = "fd22c6a9-5692-4bbd-bb77-e04567fe3bc0"
 
 sess = iRODSSession(host='localhost', port=1247, user='rods', password='', zone='grassrootsZone')
-coll = sess.collections.get("/grassrootsZone/public/under_license/toronto/Gardiner_2018-01-29_Watkins-diversity-12Mb")
+coll = sess.collections.get("/grassrootsZone/public/under_license/toronto/Zhou_2019_RobxCla_UAV_Image_Data")
 
-#coll.metadata.add("project_uuid", projectUUID)
+coll.metadata.add("uuid", projectUUID)
 
 for collection, subcollections, data_objects in coll.walk(topdown=True):
 
