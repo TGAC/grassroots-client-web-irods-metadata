@@ -54,10 +54,12 @@ def is_json(myjson):
         return False
     return True
 
-
+# 1. change here for the uuid
 projectUUID = "fd22c6a9-5692-4bbd-bb77-e04567fe3bc0"
 
 sess = iRODSSession(host='localhost', port=1247, user='rods', password='', zone='grassrootsZone')
+
+#2. change here for the irods collection (the last folder name bit)
 coll = sess.collections.get("/grassrootsZone/public/under_license/toronto/Zhou_2019_RobxCla_UAV_Image_Data")
 
 coll.metadata.add("uuid", projectUUID)
